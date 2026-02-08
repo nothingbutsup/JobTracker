@@ -93,9 +93,9 @@ const JobForm: React.FC<JobFormProps> = ({ initialData, onSubmit, onCancel }) =>
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {/* Company Name */}
-        <div className="col-span-1">
+        <div className="">
           <label htmlFor="company" className="block text-sm font-medium text-slate-700">Company Name</label>
           <input
             type="text"
@@ -110,7 +110,7 @@ const JobForm: React.FC<JobFormProps> = ({ initialData, onSubmit, onCancel }) =>
         </div>
 
         {/* Job Role */}
-        <div className="col-span-1">
+        <div className="">
           <label htmlFor="role" className="block text-sm font-medium text-slate-700">Job Role</label>
           <input
             type="text"
@@ -125,7 +125,7 @@ const JobForm: React.FC<JobFormProps> = ({ initialData, onSubmit, onCancel }) =>
         </div>
 
         {/* Date Applied (Custom Picker) */}
-        <div className="col-span-1">
+        <div className="">
           <DatePicker 
             label="Date Applied"
             name="dateApplied"
@@ -136,7 +136,7 @@ const JobForm: React.FC<JobFormProps> = ({ initialData, onSubmit, onCancel }) =>
         </div>
 
         {/* Status */}
-        <div className="col-span-1">
+        <div className="">
           <label htmlFor="status" className="block text-sm font-medium text-slate-700">Status</label>
           <select
             id="status"
@@ -152,7 +152,7 @@ const JobForm: React.FC<JobFormProps> = ({ initialData, onSubmit, onCancel }) =>
         </div>
 
         {/* Job Link */}
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <label htmlFor="jobLink" className="block text-sm font-medium text-slate-700">Job Link</label>
           <input
             type="url"
@@ -166,7 +166,7 @@ const JobForm: React.FC<JobFormProps> = ({ initialData, onSubmit, onCancel }) =>
         </div>
 
         {/* CV/Resume */}
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <label className="block text-sm font-medium text-slate-700">CV / Resume</label>
           <div className="flex items-center mt-1 space-x-4">
             {formData.cvFileName ? (
@@ -206,7 +206,7 @@ const JobForm: React.FC<JobFormProps> = ({ initialData, onSubmit, onCancel }) =>
         </div>
 
         {/* Notes */}
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <label htmlFor="notes" className="block text-sm font-medium text-slate-700">Notes</label>
           <textarea
             id="notes"
