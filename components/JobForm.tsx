@@ -170,15 +170,15 @@ const JobForm: React.FC<JobFormProps> = ({ initialData, onSubmit, onCancel }) =>
           <label className="block text-sm font-medium text-slate-700">CV / Resume</label>
           <div className="flex items-center mt-1 space-x-4">
             {formData.cvFileName ? (
-               <div className="flex items-center justify-between w-full px-4 py-2 border border-slate-200 rounded-md bg-white">
-                 <div className="flex items-center space-x-2 truncate">
+               <div className="flex items-center justify-between w-full px-4 py-2 border border-slate-200 rounded-md bg-white overflow-hidden">
+                 <div className="flex items-center space-x-2 min-w-0 flex-1">
                    <FileText className="w-5 h-5 text-primary-500 flex-shrink-0" />
-                   <span className="text-sm text-slate-700 truncate">{formData.cvFileName}</span>
+                   <span className="text-sm text-slate-700 truncate" title={formData.cvFileName}>{formData.cvFileName}</span>
                  </div>
                  <button
                   type="button"
                   onClick={removeFile}
-                  className="p-1 ml-2 text-slate-400 hover:text-red-500"
+                  className="p-1 ml-2 text-slate-400 hover:text-red-500 flex-shrink-0"
                   title="Remove file"
                  >
                    <Trash2 className="w-4 h-4" />
