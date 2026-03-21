@@ -3,6 +3,7 @@ export enum JobStatus {
   Interviewing = 'Interviewing',
   Offered = 'Offered',
   Declined = 'Declined',
+  Pending = 'Pending',
 }
 
 export interface JobApplication {
