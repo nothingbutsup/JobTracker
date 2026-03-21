@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Search, LogOut } from 'lucide-react';
-import { JobApplication, JobApplicationFormData } from './types';
+import { JobApplication, JobApplicationFormData, JobStatus } from './types';
 import { fetchApplications, addApplicationToDb, updateApplicationInDb, deleteApplicationFromDb } from './services/storage';
 import { auth } from './services/firebase';
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
@@ -32,6 +32,7 @@ function App() {
   const [editingApp, setEditingApp] = useState<JobApplication | undefined>(undefined);
   const [viewingApp, setViewingApp] = useState<JobApplication | undefined>(undefined);
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState<'Main' | 'Pending'>('Main');
   
   // State for delete confirmation
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -132,10 +133,16 @@ function App() {
     }
   };
 
-  const filteredApplications = applications.filter(app => 
-    app.company.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    app.role.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredApplications = applications.filter(app => {
+    const matchesSearch = app.company.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                         app.role.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    if (activeTab === 'Pending') {
+      return matchesSearch && app.status === JobStatus.Pending;
+    } else {
+      return matchesSearch && app.status !== JobStatus.Pending;
+    }
+  });
 
   // Loading Screen
   if (authLoading) {
@@ -200,6 +207,44 @@ function App() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="mb-6 border-b border-slate-200">
+          <nav className="-mb-px flex space-x-8">
+            <button
+              onClick={() => setActiveTab('Main')}
+              className={`
+                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                ${activeTab === 'Main'
+                  ? 'border-primary-500 text-primary-600'
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'}
+              `}
+            >
+              Main
+              {applications.filter(a => a.status !== JobStatus.Pending).length > 0 && (
+                <span className={`ml-2 py-0.5 px-2.5 rounded-full text-xs font-medium ${activeTab === 'Main' ? 'bg-primary-100 text-primary-600' : 'bg-slate-100 text-slate-600'}`}>
+                  {applications.filter(a => a.status !== JobStatus.Pending).length}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={() => setActiveTab('Pending')}
+              className={`
+                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
+                ${activeTab === 'Pending'
+                  ? 'border-purple-500 text-purple-600'
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'}
+              `}
+            >
+              Pending
+              {applications.filter(a => a.status === JobStatus.Pending).length > 0 && (
+                <span className={`ml-2 py-0.5 px-2.5 rounded-full text-xs font-medium ${activeTab === 'Pending' ? 'bg-purple-100 text-purple-600' : 'bg-slate-100 text-slate-600'}`}>
+                  {applications.filter(a => a.status === JobStatus.Pending).length}
+                </span>
+              )}
+            </button>
+          </nav>
         </div>
 
         {/* Loading State for Data */}
