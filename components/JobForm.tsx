@@ -102,6 +102,7 @@ const JobForm: React.FC<JobFormProps> = ({ initialData, onSubmit, onCancel }) =>
             id="company"
             name="company"
             required
+            maxLength={25}
             value={formData.company}
             onChange={handleChange}
             className="block w-full px-3 py-2 mt-1 bg-white text-slate-900 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
@@ -220,9 +221,9 @@ const JobForm: React.FC<JobFormProps> = ({ initialData, onSubmit, onCancel }) =>
         </div>
       </div>
 
-      <div className="flex justify-end pt-4 space-x-3 border-t border-slate-100">
-        <Button type="button" variant="secondary" onClick={onCancel}>Cancel</Button>
-        <Button type="submit" variant="primary" icon={Save} disabled={isSubmitting}>
+      <div className="flex justify-center pt-6 space-x-4 border-t border-slate-100">
+        <Button type="button" variant="secondary" onClick={onCancel} className="w-full sm:w-auto">Cancel</Button>
+        <Button type="submit" variant="primary" icon={Save} disabled={isSubmitting} className="w-full sm:w-auto">
           {isSubmitting ? 'Saving...' : 'Save Application'}
         </Button>
       </div>
