@@ -28,6 +28,11 @@ const JobTable: React.FC<JobTableProps> = ({ applications, onEdit, onDelete, onV
     return dateString;
   };
 
+  const truncate = (str: string, length: number) => {
+    if (!str) return '';
+    return str.length > length ? str.substring(0, length) + '...' : str;
+  };
+
   if (applications.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 bg-white border rounded-lg border-slate-200 shadow-sm">
@@ -43,16 +48,16 @@ const JobTable: React.FC<JobTableProps> = ({ applications, onEdit, onDelete, onV
   return (
     <div className="bg-white border rounded-lg border-slate-200 shadow-sm overflow-hidden">
       <div className="overflow-x-auto custom-scrollbar">
-        <table className="min-w-full divide-y divide-slate-200">
+        <table className="min-w-full table-fixed divide-y divide-slate-200">
           <thead className="bg-slate-50">
             <tr>
-              <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Company & Role</th>
-              <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Job Link</th>
-              <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Date</th>
-              <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Status</th>
-              <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Notes</th>
-              <th scope="col" className="px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Resume</th>
-              <th scope="col" className="relative px-6 py-3">
+              <th scope="col" className="w-[25%] px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Company & Role</th>
+              <th scope="col" className="w-[12%] px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Job Link</th>
+              <th scope="col" className="w-[12%] px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Date</th>
+              <th scope="col" className="w-[12%] px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Status</th>
+              <th scope="col" className="w-[20%] px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Notes</th>
+              <th scope="col" className="w-[10%] px-6 py-3 text-xs font-medium tracking-wider text-left text-slate-500 uppercase">Resume</th>
+              <th scope="col" className="w-[9%] relative px-6 py-3">
                 <span className="sr-only">Actions</span>
               </th>
             </tr>
@@ -67,7 +72,9 @@ const JobTable: React.FC<JobTableProps> = ({ applications, onEdit, onDelete, onV
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex flex-col">
                     <span className="text-sm font-bold text-slate-900">{app.company}</span>
-                    <span className="text-xs text-slate-500">{app.role}</span>
+                    <span className="text-xs text-slate-500" title={app.role}>
+                      {truncate(app.role, 45)}
+                    </span>
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm text-slate-500 whitespace-nowrap">
@@ -91,10 +98,16 @@ const JobTable: React.FC<JobTableProps> = ({ applications, onEdit, onDelete, onV
                 <td className="px-6 py-4 whitespace-nowrap">
                   <StatusBadge status={app.status} />
                 </td>
-                <td className="px-6 py-4 text-sm text-slate-500 max-w-xs truncate">
-                  <div className="flex items-start gap-1.5" title={app.notes}>
-                    {app.notes && <StickyNote className="w-3.5 h-3.5 mt-0.5 text-slate-400 flex-shrink-0" />}
-                    <span className="truncate">{app.notes || <span className="text-slate-300">-</span>}</span>
+                <td className="px-6 py-4 text-sm text-slate-500 max-w-xs truncate text-left">
+                  <div className="flex items-center justify-start gap-1.5" title={app.notes}>
+                    {app.notes ? (
+                      <>
+                        <StickyNote className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                        <span className="truncate">{app.notes}</span>
+                      </>
+                    ) : (
+                      <span className="text-slate-300">-</span>
+                    )}
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm text-slate-500 whitespace-nowrap">
