@@ -11,6 +11,11 @@ interface JobDetailsViewProps {
 }
 
 const JobDetailsView: React.FC<JobDetailsViewProps> = ({ application, onClose, onEdit }) => {
+  const truncate = (str: string, length: number) => {
+    if (!str) return '';
+    return str.length > length ? str.substring(0, length) + '...' : str;
+  };
+
   return (
     <div className="space-y-6">
       {/* Header Info */}
@@ -23,7 +28,9 @@ const JobDetailsView: React.FC<JobDetailsViewProps> = ({ application, onClose, o
             <h2 className="text-xl font-bold text-slate-900 truncate" title={application.company}>{application.company}</h2>
             <div className="flex items-center text-slate-500 mt-0.5">
               <Briefcase className="w-4 h-4 mr-1.5 flex-shrink-0" />
-              <span className="text-sm font-medium truncate" title={application.role}>{application.role}</span>
+              <span className="text-sm font-medium truncate" title={application.role}>
+                {truncate(application.role, 45)}
+              </span>
             </div>
           </div>
         </div>
@@ -100,11 +107,11 @@ const JobDetailsView: React.FC<JobDetailsViewProps> = ({ application, onClose, o
       </div>
 
       {/* Footer Actions */}
-      <div className="flex justify-end space-x-3 pt-6">
-        <Button variant="secondary" onClick={onClose}>
+      <div className="flex justify-center space-x-4 pt-8 border-t border-slate-100">
+        <Button variant="secondary" onClick={onClose} className="w-full sm:w-auto">
           Close
         </Button>
-        <Button variant="primary" onClick={onEdit}>
+        <Button variant="primary" onClick={onEdit} className="w-full sm:w-auto">
           Edit Details
         </Button>
       </div>
