@@ -210,8 +210,8 @@ function App() {
         </div>
 
         {/* Tabs */}
-        <div className="mb-6 border-b border-slate-200">
-          <nav className="-mb-px flex space-x-8">
+        <div className="mb-8 flex border-b border-slate-200">
+          <nav className="-mb-px flex space-x-12">
             <button
               onClick={() => setActiveTab('Main')}
               className={`
